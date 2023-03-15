@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import React, { useState } from 'react';
+import ClassicEditor from './components/ckeditor5/build/ckeditor';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+	const [data, setData] = useState();
+
+	return (
+		<div>
+			<CKEditor
+				editor={ClassicEditor}
+				data={data}
+				onReady={editor => {
+					// You can store the "editor" and use when it is needed.
+					console.log('Editor is ready to use!', editor);
+				}}
+				onChange={(event, editor) => {
+					setData(editor.getData());
+				}}
+			/>
+			<div dangerouslySetInnerHTML={{ __html: data }} />
+		</div>
+	);
+};
 
 export default App;
